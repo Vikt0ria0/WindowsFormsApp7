@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 
 namespace WindowsFormsApp7
@@ -15,11 +14,11 @@ namespace WindowsFormsApp7
         }
         public virtual void ProccessEvent()
         {
-            
+
         }
     }
 
-    public class ClientCustom: Agent //входящий поток
+    public class ClientCustom : Agent //входящий поток
     {
         private Random rnd = new Random();
         public double lambda = 2;
@@ -50,12 +49,13 @@ namespace WindowsFormsApp7
         }
     }
 
-    public class Customer: Agent //клиенты
+    public class Customer : Agent //клиенты
     {
         //inf for client time etc ok
     }
 
-    public class MyQuere : Agent {
+    public class MyQuere : Agent
+    {
         private List<Operator> operators = new List<Operator>();
         private Queue<Customer> queue = new Queue<Customer>();
         internal void acceptCustomer(Customer customer)
@@ -83,7 +83,7 @@ namespace WindowsFormsApp7
     {
         private Service service = new Service();
         private MyQuere quere = new MyQuere();
-     
+
         public void CustomerA(Customer customer)
         {
             if (service.hasFreeOp()) service.acceptCustomer(customer);
@@ -94,9 +94,9 @@ namespace WindowsFormsApp7
         {
             return service.getNextEventTime();
         }
-        public override void ProcessEvent()
+        public override void ProccessEvent()
         {
-            service.ProcessEvent();
+            service.ProccessEvent();
             if (quere.hasCustomers())
             {
                 Customer cus = quere.takeCustomer();
@@ -117,6 +117,10 @@ namespace WindowsFormsApp7
                 operators.Add(new Operator());
             }
         }
+        public Service()
+        {
+        }
+
         public void acceptCustomer(Customer customer)
         {
             Operator op = findFreeOp();
@@ -152,10 +156,10 @@ namespace WindowsFormsApp7
             }
             return tMin;
         }
-        public override void processEvent()
+        public override void ProccessEvent()
         {
             if (activeOper != null)
-                activeOper.processEvent();
+                activeOper.ProccessEvent();
         }
 
     }
@@ -189,7 +193,7 @@ namespace WindowsFormsApp7
         {
             return endOfSeviceTime;
         }
-        public override void ProcessEvent()
+        public override void ProccessEvent()
         {
             customerInService = null;
             endOfSeviceTime = double.MaxValue;
